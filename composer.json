@@ -1,0 +1,19 @@
+{
+  "name": "nowzoo/wp-s3",
+  "description": "Stores WordPress uploads on Amazon S3",
+  "license": "private",
+  "authors": [
+    {
+      "name": "Christopher Carson",
+      "email": "chris@nowzoo.com"
+    }
+  ],
+  "autoload": {
+    "psr-0": {
+      "NowZoo\\WPS3\\": "src/"
+    }
+  },
+  "require": {
+    "aws/aws-sdk-php": "2.7.26"
+  }
+}
