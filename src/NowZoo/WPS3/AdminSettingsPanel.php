@@ -46,7 +46,7 @@ class AdminSettingsPanel {
         $option = Plugin::get_aws_option();
         $error = $this->error;
         $message = $this->message;
-        Plugin::require_lib_path('includes/admin_panel.php', compact('option', 'error', 'message'));
+        Plugin::require_lib_path('includes/admin_panel_settings.php', compact('option', 'error', 'message'));
     }
 
 

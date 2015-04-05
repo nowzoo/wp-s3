@@ -19,6 +19,7 @@ class Plugin{
     private function __construct(){
         AdminSettingsPanel::inst();
         Hooks::inst();
+        AdminUploadsSyncPanel::inst();
     }
 
     public static function lib_path($p = false){
