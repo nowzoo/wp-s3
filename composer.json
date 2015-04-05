@@ -13,7 +13,14 @@
       "NowZoo\\WPS3\\": "src/"
     }
   },
+  "repositories":[
+    {
+      "type": "vcs",
+      "url": "https://github.com/nowzoo/wp-utils.git"
+    }
+  ],
   "require": {
+    "nowzoo/wp-utils": "dev-master",
     "aws/aws-sdk-php": "2.7.26"
   }
 }
