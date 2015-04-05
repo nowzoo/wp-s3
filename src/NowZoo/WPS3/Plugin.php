@@ -3,10 +3,9 @@ namespace NowZoo\WPS3;
 use Aws\S3\S3Client;
 
 class Plugin{
+    const PMK_S3 = 'nowzoo-aws-s3';
     const SITE_OPTION_AWS = 'nowzoo-aws-s3';
     const SITE_OPTION_AWS_VALID = 'nowzoo-aws-s3-validated';
-
-
 
     private static $instance = null;
 
@@ -18,7 +17,8 @@ class Plugin{
     }
 
     private function __construct(){
-       AdminPanel::inst();
+        AdminSettingsPanel::inst();
+        Hooks::inst();
     }
 
     public static function lib_path($p = false){
@@ -30,7 +30,6 @@ class Plugin{
     }
 
     public static function require_lib_path($p = false, $data = array()){
-
         extract($data);
         require self::lib_path($p);
     }
@@ -112,7 +111,7 @@ class Plugin{
 
 
     }
-    
+
 
 
     public static function get_client($option = null){

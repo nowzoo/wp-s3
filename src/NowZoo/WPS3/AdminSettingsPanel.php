@@ -3,7 +3,7 @@ namespace NowZoo\WPS3;
 
 use NowZoo\WPUtils\WPUtils;
 
-class AdminPanel {
+class AdminSettingsPanel {
 
 
     private $message = '';
@@ -15,7 +15,7 @@ class AdminPanel {
 
     public static function inst(){
         if (is_null(self::$instance)){
-            self::$instance = new AdminPanel;
+            self::$instance = new AdminSettingsPanel;
         }
         return self::$instance;
     }
@@ -51,6 +51,8 @@ class AdminPanel {
 
 
     public function action_init(){
+        if (! is_admin()) return;
+        if (! isset($_GET['page']) || Plugin::SITE_OPTION_AWS !== $_GET['page']) return;
         if (! WPUtils::is_submitting()) return;
         if (is_multisite()){
             $cap = 'manage_network';
@@ -59,7 +61,7 @@ class AdminPanel {
         }
         if (! current_user_can($cap)) return;
 
-        if (! wp_verify_nonce($_REQUEST[Plugin::SITE_OPTION_AWS . '_nonce'], Plugin::SITE_OPTION_AWS) ){
+        if (! wp_verify_nonce($_POST[Plugin::SITE_OPTION_AWS . '_nonce'], Plugin::SITE_OPTION_AWS) ){
             return;
         }
         $option = WPUtils::trim_stripslashes_deep($_POST[Plugin::SITE_OPTION_AWS]);
