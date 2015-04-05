@@ -1,7 +1,7 @@
 {
   "name": "nowzoo/wp-s3",
   "description": "Stores WordPress uploads on Amazon S3",
-  "license": "private",
+  "license": "MIT",
   "authors": [
     {
       "name": "Christopher Carson",
