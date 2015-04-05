@@ -71,6 +71,11 @@ class Hooks {
         $option = Plugin::get_aws_option();
         $attached = get_post_meta($post_id, '_wp_attached_file', true);
         if (! $attached) return $url;
+        if (is_multisite()){
+            if (BLOG_ID_CURRENT_SITE != get_current_blog_id()){
+                $attached = 'sites/' . get_current_blog_id() . '/' . $attached;
+            }
+        }
         return 'https://s3.amazonaws.com/' . $option['bucket'] . '/' . $attached;
     }
 
