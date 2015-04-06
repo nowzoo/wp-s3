@@ -76,7 +76,12 @@ class Hooks {
                 $attached = 'sites/' . get_current_blog_id() . '/' . $attached;
             }
         }
-        return 'https://s3.amazonaws.com/' . $option['bucket'] . '/' . $attached;
+        if ($option['cloudfront_enabled'] && ! empty($option['cloudfront_domain'])){
+            $base = $option['cloudfront_domain'];
+        } else {
+            $base = 's3.amazonaws.com/' . $option['bucket'];
+        }
+        return 'https://' . $base .  '/' . $attached;
     }
 
     /**

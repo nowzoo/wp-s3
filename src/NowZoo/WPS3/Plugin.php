@@ -35,12 +35,18 @@ class Plugin{
         require self::lib_path($p);
     }
 
-    public static function get_aws_option(){
-        $defaults = array(
+    public static function default_options(){
+        return array(
             'key' => '',
             'secret' => '',
-            'bucket' => ''
+            'bucket' => '',
+            'cloudfront_enabled' => false,
+            'cloudfront_domain' => ''
         );
+    }
+
+    public static function get_aws_option(){
+        $defaults = self::default_options();
         if (is_multisite()){
             $option = get_site_option(self::SITE_OPTION_AWS);
         } else {
@@ -63,13 +69,9 @@ class Plugin{
     }
 
     public static function set_aws_option($option, $validated){
-        $defaults = array(
-            'key' => '',
-            'secret' => '',
-            'bucket' => ''
-        );
+        $defaults = self::default_options();
         if (! is_array($option)){
-            $option = array();
+            $option = $defaults;
         }
         $option = array_merge($defaults, $option);
         if (is_multisite()) {

@@ -1,9 +1,9 @@
 {
   "name": "nowzoo/wp-s3",
-  "description": "Stores WordPress uploads on Amazon S3",
+  "description": "Stores WordPress uploads on Amazon S3. Optionally allows you to use a Cloudfront distribution.",
   "license": "MIT",
   "homepage": "https://github.com/nowzoo/wp-s3",
-  "keywords": ["aws","s3","wordpress"],
+  "keywords": ["aws","s3", "cloudfront", "wordpress"],
   "authors": [
     {
       "name": "Christopher Carson",
