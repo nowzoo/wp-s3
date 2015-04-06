@@ -2,6 +2,8 @@
   "name": "nowzoo/wp-s3",
   "description": "Stores WordPress uploads on Amazon S3",
   "license": "MIT",
+  "homepage": "https://github.com/nowzoo/wp-s3",
+  "keywords": ["aws","s3","wordpress"],
   "authors": [
     {
       "name": "Christopher Carson",
@@ -13,14 +15,8 @@
       "NowZoo\\WPS3\\": "src/"
     }
   },
-  "repositories":[
-    {
-      "type": "vcs",
-      "url": "https://github.com/nowzoo/wp-utils.git"
-    }
-  ],
   "require": {
-    "nowzoo/wp-utils": "dev-master",
+    "nowzoo/wp-utils": "0.1.*",
     "aws/aws-sdk-php": "2.7.26"
   }
 }
