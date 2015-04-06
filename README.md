@@ -4,7 +4,7 @@ Stores WordPress uploads in an Amazon S3 bucket. Optionally, enables the use of 
 
 ##Features
 
-- Works on both network snd single WordPress installations. The bucket directly mirrors the `wp-content/uploads` directory.
+- Works on both network and single WordPress installations. The bucket directly mirrors the `wp-content/uploads` directory.
 - Syncs files immediately on upload, edit and delete.
 - Can sync all a site's uploads at once -- useful if you are importing a site.
 
