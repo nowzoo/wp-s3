@@ -1,1 +1,4 @@
-Store WordPress uploads on Amazon S3.
+
+Stores WordPress uploads on Amazon S3.
+
+
