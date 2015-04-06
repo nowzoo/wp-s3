@@ -16,7 +16,7 @@
     }
   },
   "require": {
-    "nowzoo/wp-utils": "0.1.*",
+    "nowzoo/wp-utils": "dev-master",
     "aws/aws-sdk-php": "2.7.26"
   }
 }
