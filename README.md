@@ -27,7 +27,7 @@ NowZoo\WPS3\Plugin::inst();
 - You need an Amazon S3 account.
 - Create an S3 bucket for your WordPress installation. Networked installations only need one bucket.
 - **Recommended:** Create a dedicated IAM user for the bucket, and attach a policy to the bucket that allows that user to upload and delete objects. [Instructions for bucket policies.](http://docs.aws.amazon.com/AmazonS3/latest/dev/example-bucket-policies.html)
-- Enter the AWS user credentials, bucket name and, optiaonally, a Cloudfront distribution domain...
+- Enter the AWS user credentials, bucket name and, optionally, a Cloudfront distribution domain...
    - Network installs: /wp-admin/network/settings.php?page=nowzoo-aws-s3
    - Single installs: /wp-admin/settings.php?page=nowzoo-aws-s3   
 
