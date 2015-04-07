@@ -39,6 +39,7 @@ class Hooks {
             $local_dir .= '/' . $path;
             $key_prefix = $path;
         }
+        throw new \Exception('local dir:' . $local_dir);
         try{
             $client->uploadDirectory($local_dir, $option['bucket'], $key_prefix, array(
                 'params'      => array('ACL' => 'public-read'),
