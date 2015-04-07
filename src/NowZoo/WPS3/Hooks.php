@@ -1,5 +1,8 @@
 <?php
 namespace NowZoo\WPS3;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
 class Hooks {
     private static $instance = null;
 
@@ -24,24 +27,16 @@ class Hooks {
     }
 
     /**
-     * @param string $path
+     * @param $full_local_path
      * @return bool
      * @throws \Exception
      */
-    private function sync_dir($path = ''){
+    private function sync_dir($full_local_path){
         $option = Plugin::get_aws_option();
         $client = Plugin::get_client($option);
-        $key_prefix = null;
-        $upload_paths = wp_upload_dir();
-        $local_dir = $upload_paths['basedir'];
-        if (! empty($path)){
-            $path = trim($path, '/');
-            $local_dir .= '/' . $path;
-            $key_prefix = $path;
-        }
-        throw new \Exception('local dir:' . $local_dir);
+        $key_prefix = $this->full_local_path_to_key_prefix($full_local_path);
         try{
-            $client->uploadDirectory($local_dir, $option['bucket'], $key_prefix, array(
+            $client->uploadDirectory($full_local_path, $option['bucket'], $key_prefix . '/', array(
                 'params'      => array('ACL' => 'public-read'),
                 'concurrency' => 20
             ));
@@ -51,12 +46,23 @@ class Hooks {
         }
     }
 
+    private function attached_file_meta_to_full_local_path($attached){
+        $paths = wp_upload_dir();
+        $base = $paths['basedir'];
+        return dirname($base . '/' . $attached);
+    }
+
+    private function full_local_path_to_key_prefix($full_local_path){
+        $mask = WP_CONTENT_DIR . '/uploads';
+        return trim(str_replace($mask, '', $full_local_path), '/');
+    }
+
     public function filter_wp_update_attachment_metadata($data, $post_id){
         $attached = get_post_meta($post_id, '_wp_attached_file', true);
         if (! $attached) return $data;
-        $path = dirname($attached);
+        $full_local_path = $this->attached_file_meta_to_full_local_path($attached);
         try{
-            $this->sync_dir($path);
+            $this->sync_dir($full_local_path);
             return $data;
         } catch(\Exception $e){
             return $data;
@@ -69,6 +75,7 @@ class Hooks {
      * @return string
      */
     public function filter_wp_get_attachment_url($url, $post_id){
+
         $option = Plugin::get_aws_option();
         $attached = get_post_meta($post_id, '_wp_attached_file', true);
         if (! $attached) return $url;
@@ -110,19 +117,21 @@ class Hooks {
         $client = Plugin::get_client($option);
         $attachment_meta = wp_get_attachment_metadata($post_id);
         $backup_sizes = get_post_meta($post_id, '_wp_attachment_backup_sizes', true);
+        $attached = get_post_meta($post_id, '_wp_attached_file', true);
         if ($attachment_meta){
+            $full_local_path = $this->attached_file_meta_to_full_local_path($attached);
+            $key_prefix = $this->full_local_path_to_key_prefix($full_local_path);
             $dir = explode('/', $attachment_meta['file']);
             $file = array_pop($dir);
-            $dir = implode('/', $dir);
-            $this->delete_one($client, $option['bucket'], $dir, $file);
+            $this->delete_one($client, $option['bucket'], $key_prefix, $file);
             if (isset($attachment_meta['sizes']) && is_array($attachment_meta['sizes'])){
                 foreach($attachment_meta['sizes'] as $size){
-                    $this->delete_one($client, $option['bucket'], $dir, $size['file']);
+                    $this->delete_one($client, $option['bucket'], $key_prefix, $size['file']);
                 }
             }
             if ($backup_sizes && is_array($backup_sizes)){
                 foreach($backup_sizes as $size){
-                    $this->delete_one($client, $option['bucket'], $dir, $size['file']);
+                    $this->delete_one($client, $option['bucket'], $key_prefix, $size['file']);
                 }
             }
         }
