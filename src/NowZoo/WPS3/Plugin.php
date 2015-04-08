@@ -40,6 +40,7 @@ class Plugin{
             'key' => '',
             'secret' => '',
             'bucket' => '',
+            'subdirectory' => '',
             'cloudfront_enabled' => false,
             'cloudfront_domain' => ''
         );
@@ -89,7 +90,7 @@ class Plugin{
         }
 
         if (empty($option['key']) || empty($option['secret']) || empty($option['bucket'])){
-            $error = 'All AWS S3 fields are required. Enter your access key and secret and the name of the bucket.';
+            $error = 'All AWS S3 fields are required. Enter your access key and secret, and the name of the bucket.';
             return false;
         }
 

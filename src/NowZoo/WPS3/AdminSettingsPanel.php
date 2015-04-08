@@ -37,10 +37,12 @@ class AdminSettingsPanel {
     public function action_admin_menu(){
         if (is_multisite()){
             $cap = 'manage_network';
+            $parent = 'settings.php';
         } else {
             $cap = 'administrator';
+            $parent = 'options-general.php';
         }
-        add_submenu_page('settings.php', 'AWS S3', 'AWS S3', $cap, Plugin::SITE_OPTION_AWS, array($this, 'panel'));
+        add_submenu_page($parent, 'AWS S3', 'AWS S3', $cap, Plugin::SITE_OPTION_AWS, array($this, 'panel'));
     }
     public function panel(){
         $option = Plugin::get_aws_option();

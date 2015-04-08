@@ -68,6 +68,7 @@ use NowZoo\WPS3\Plugin;
                 </td>
             </tr>
 
+
             <tr>
                 <th><label for="<?php echo Plugin::SITE_OPTION_AWS?>_cloudfront_enabled">Cloudfront</label> </th>
                 <td>
